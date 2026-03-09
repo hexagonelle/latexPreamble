@@ -11,7 +11,7 @@
 \usepackage{unicode-math}												% Math fonts with unicode symbols.
 \usepackage{slashed}														% Adds a slash for Feynman notation.
 \usepackage{titling}														% Adjust title layout.
-%\usepackage{stackengine}												% Used for stacking things.
+\usepackage{stackengine}												% Stack symbols; for \decileft (below)
 \usepackage{xfrac}															% More fractions, e.g. slanted fractions.
 \usepackage{multirow}														% Extends table environment.
 \usepackage{slashed}														% Feynman slash notation.
@@ -26,7 +26,8 @@
 \usepackage{graphicx}														% Additional graphics options.
 \usepackage{tikz-feynman}												% Feynman diagrams.
 \usepackage[framemethod=TikZ]{mdframed}					% Customizable boxing
-\usepackage[object=vectorian]{pgfornament} 
+\usepackage[object=vectorian]{pgfornament}			% Page ornaments.
+\usepackage[notquote]{hanging}		%Hanging paragraphs; option prevents choking on apostrophes.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -61,8 +62,8 @@
 %%%%%%%%%%%%%%%%%%%%%%
 	
 % Remove space before title
-\setlength{\droptitle}{-15em} 
-\posttitle{\par\end{center}}
+% \setlength{\droptitle}{-15em} 
+% \posttitle{\par\end{center}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -131,16 +132,18 @@
   }
 }
 
-% Set style of big fancy script letters.
-
-% %\renewcommand{\LettrineFontHook}{\initfamily}
-% \renewcommand{\LettrineFontHook}{\usefont{U}{yinit}{m}{n}}
-% %\renewcommand*{\DefaultLoversize}{-0.70}
-% \renewcommand*{\DefaultLoversize}{0.1}
-% \setcounter{DefaultLines}{4}
-% \AtBeginDocument{\setlength{\DefaultFindent}{0.5em}}
-% \setlength{\DefaultNindent}{0pt}
-% \renewcommand{\DefaultLraise}{-0.01}
+% Set style of lettrine to the yint font.
+\renewcommand{\LettrineFontHook}{\usefont{U}{yinit}{m}{n}}
+% Adjust default size of lettrine
+\renewcommand*{\DefaultLoversize}{0.1}
+% Adjust default number of lines that the lettrine takes up
+\setcounter{DefaultLines}{4}
+% Adjust space between lettrine and text immediately after
+\AtBeginDocument{\setlength{\DefaultFindent}{0.5em}}
+% Adjust indent of the remaining lines
+\setlength{\DefaultNindent}{0pt}
+% Shift lettrine up
+\renewcommand{\DefaultLraise}{-0.01}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -156,13 +159,14 @@
 % Custom triangle
 \tikzset{triangle/.style={
 	regular polygon,
-	regular polygon sides=3}
-}
+	regular polygon sides=3
+}}
 % Custom diamond
 \tikzset{diamond/.style={
 	regular polygon,
 	regular polygon sides=4,
-	shape border rotate=45}
+	shape border rotate=45
+}}
 
 
 %%%%%%%% For geometry & coordinate planes
@@ -223,7 +227,7 @@
 
 % Draws a square grid of a specified size, centered at the origin
 % Syntax -- \coordplane{<origin coords>}{< -x bound>}{< +x bound>}{< -y bound>}{< +y bound>}
-\newcommand{\coordGridSq}[5]{
+\newcommand{\coordGrid}[5]{
 	\foreach \x in {#2,...,#3}{
 		\draw[line width=0.25pt,shift={#1}](\x,#4)--(\x,#5);
 	}		
@@ -235,8 +239,8 @@
 % Draws a square dot-grid of a specified size, centered at the origin
 % Syntax -- \coordplane{<origin coords>}{<size of +axis}
 \newcommand{\coordGridDotsSq}[2]{
-	\foreach \x in {#2,...,#3}{	
-		\foreach \y in {#4,...,#5}{
+	\foreach \x in {-#2,...,#2}{	
+		\foreach \y in {-#2,...,#2}{
 			\draw[shift={#1}](\x,\y)node[dots]{};
 		}
 	}
@@ -280,7 +284,7 @@
 }}
 
 % Car
-\tikzset{apple/.pic={
+\tikzset{car/.pic={
 	\draw
 		(6,-4.5)--++
 		(0,0.5)--++
@@ -298,7 +302,7 @@
 		(0,0.25);
 	\draw(8.46,-4.75)circle(0.225);
 	\draw(6.96,-4.75)circle(0.225);
-}
+}}
 
 
 %%%%%%%%%%%%%%%%%%%%%
@@ -399,7 +403,7 @@
 
 % Define imperial units
 % length
-\DeclareSIUnit{\in}{in}
+\DeclareSIUnit{\inch}{in}
 \DeclareSIUnit{\ft}{ft}
 \DeclareSIUnit{\yd}{yard}
 \DeclareSIUnit{\mi}{mi}
