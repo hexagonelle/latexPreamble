@@ -155,7 +155,11 @@
 % Custom dots
 \tikzset{dots/.style={shape=circle,fill=black,scale=0.3}}
 % Custom cross
-\tikzset{cross/.style={cross out}}
+\tikzset{cross/.style={
+	cross out, draw=black,
+	minimum size = 0.25em,
+	inner sep=0pt, outer sep=0pt
+}}
 % Custom triangle
 \tikzset{triangle/.style={
 	regular polygon,
@@ -168,6 +172,13 @@
 	shape border rotate=45
 }}
 
+\newcommand{\boxFloor}[3]{
+	\draw[#3] ($(#1) - (#2/2,0)$) rectangle ($(#1) + (#2/2,#2)$)
+}
+
+\newcommand{\boxCenter}[3]{
+	\draw[#3] ($(#1) - (#2/2,#2/2)$) rectangle ($(#1) + (#2/2,#2/2)$)
+}
 
 %%%%%%%% For geometry & coordinate planes
 
