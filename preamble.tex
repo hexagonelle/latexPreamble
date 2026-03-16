@@ -41,7 +41,10 @@
 	positioning,
 	quotes,
 	angles,
-	graphs.standard
+	graphs.standard,
+	decorations.pathmorphing,
+	decorations.markings,
+	calc
 }
 
 \usepgflibrary{plotmarks}
@@ -265,6 +268,57 @@
 			\draw[shift={#1}]node[dots](\x,\y){};
 		}
 	}
+}
+
+%%%%%%%% Special line types.
+
+% Draws a "rough" line.
+% Syntax -- \drawRough{startcoord}{endcoord}{roughness}
+\NewDocumentCommand{\drawRough}{m m m O{}}{
+	\draw[#4,
+		postaction=decorate,
+		decoration={
+			markings,
+			mark=between positions 1cm and 3cm step 0.5cm with {
+				\node[
+					transform shape,
+					inner sep=1pt
+				](
+					mark-\pgfkeysvalueof
+						{/pgf/decoration/mark info/sequence number}
+				){};
+			}
+		}
+	]{
+		decorate[
+			decoration={
+				random steps,
+				segment length=1.5mm,
+				amplitude=#3 %Roughness is amplitude
+			}
+		]{(#1)--(#2)}
+	}
+}
+
+% Draws a "fat" arrow
+
+\tikzset{fatArrow/.style={
+	-{Triangle[
+		width=\the\dimexpr1.8\pgflinewidth,
+		length=\the\dimexpr0.8\pgflinewidth
+	]}
+}}
+
+\NewDocumentCommand{\thickArrow}{O{} m m m}{
+	\draw[#1]
+		($(#3)!#4cm!-90:(#2)$)--
+		($(#2)!#4cm!90:(#3)$)--
+		($(#2)!#4cm!-90:(#3)$)--
+		($(#3)!#4cm!90:(#2)$)--
+		($(#3)!1.4*#4cm!90:(#2)$)--
+		($(#3)!1.6*#4cm!180:(#2)$)--
+		($(#3)!1.4*#4cm!-90:(#2)$)--
+		cycle;
 }
 
 %%%%%%%%%%%%%% Pre-defined graphics objects.
