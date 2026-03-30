@@ -412,24 +412,24 @@
 
 % Block on a ramp
 % Syntax = \blockRamp{ramp right angle corner}{blockSize}{% from top}{rampAngle}{rampLength}
-\NewDocumentCommand{\blockRamp}{m m m m m}{
-	\draw
-		(#1)--++
-		(0,{#5*sin(#4)})--++
-		({#5*cos(#4)},{-#5*sin(#4)})--
-		(#1);
+\NewDocumentCommand{\blockRamp}{O{} m m m m m}{
+	\draw[#1]
+		(#2)--++
+		(0,{#6*sin(#5)})--++
+		({#6*cos(#5)},{-#6*sin(#5)})--
+		(#2);
 	\draw
 		($
-			(#1)+
-			(0,{#5*sin(#4)})+
-			#3*#5*({cos(#4)},{-sin(#4)})+
-			#2*({-cos(#4)},{sin(#4)})
+			(#2)+
+			(0,{#6*sin(#5)})+
+			#4*#6*({cos(#5)},{-sin(#5)})+
+			#3*({-cos(#5)},{sin(#5)})
 		$)--++
-		({#2*sin(#4)},{#2*cos(#4)})--++
-		({#2*cos(#4)},{-#2*sin(#4)})--++
-		({-#2*sin(#4)},{-#2*cos(#4)})--++
-		({-#2*cos(#4)},{#2*sin(#4)});
-	\anglabel{($(#1)+({#5*cos(#4)},0)$)}{180}{180-#4}{0.125*#5}
+		({#3*sin(#5)},{#3*cos(#5)})--++
+		({#3*cos(#5)},{-#3*sin(#5)})--++
+		({-#3*sin(#5)},{-#3*cos(#5)})--++
+		({-#3*cos(#5)},{#3*sin(#5)});
+	\anglabel{($(#2)+({#6*cos(#5)},0)$)}{180}{180-#5}{0.125*#6}
 }
 
 
