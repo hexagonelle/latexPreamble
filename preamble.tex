@@ -14,7 +14,7 @@
 \usepackage{stackengine}												% Stack symbols; for \decileft (below)
 \usepackage{xfrac}															% More fractions, e.g. slanted fractions.
 \usepackage{multirow}														% Extends table environment.
-\usepackage{mathexam}														%Exam formatting
+% \usepackage{mathexam}														%Exam formatting
 \usepackage{slashed}														% Feynman slash notation.
 \usepackage{xcolor}															% More colors.
 \usepackage{siunitx}														% Units & scientific notation.
@@ -63,9 +63,9 @@
 \def\initdefault{yinit}
 
 % Sets the title for exams.
-\ExamClass{Phys 105}
-\ExamName{Practice Midterm 2}
-\ExamHead{Spring 2026}
+% \ExamClass{Phys 105}
+% \ExamName{Practice Midterm 2}
+% \ExamHead{Spring 2026}
 
 
 %%%%%%%%%%%%%%%%%%%%%%
@@ -95,7 +95,8 @@
 % For the rest, default to the OpenDyslexic font.
 \setmathfont{OpenDyslexic Italic}[range=it]
 \setmathfont{OpenDyslexic}[range=up]
-\setmathfont{OpenDyslexic}[range={"01-"27,"30-"7B,"7D-"FF,"2B,"2D,"2E,"B7}]
+\setmathfont{OpenDyslexic}[range={"01-"02,"04-"27,"30-"7B,"7D-"FF,"2B,"2D,"2E,"B7}]
+\setmathfont{KPMath-Sans}[range={"03D1,"1D751}]
 
 
 
@@ -200,8 +201,8 @@
 
 % Custom angle marker
 % Syntax -- \anglabel{<vertex coord>}{<start angle>}{<end angle>}{<arc radius>}
-\newcommand{\anglabel}[4]{
-	\draw ($#1 + (#2:#4)$) arc (#2:#3:#4)
+\NewDocumentCommand{\anglabel}{O{} m m m m}{
+	\draw[#1]($#2 + (#3:#5)$) arc (#3:#4:#5)
 }
 
 % Custom dashes
@@ -486,6 +487,9 @@
 
 
 %%%%%%%% Symbols
+
+% Unicode math redefines vartheta. Define the version we want here:
+\newcommand{\ctheta}{\symbol{"1D751}}
 
 % Used for ""-bar characters.
 \newcommand{\smash@bar}[4]{%
