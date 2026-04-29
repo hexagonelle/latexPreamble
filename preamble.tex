@@ -95,8 +95,11 @@
 % For the rest, default to the OpenDyslexic font.
 \setmathfont{OpenDyslexic Italic}[range=it]
 \setmathfont{OpenDyslexic}[range=up]
-\setmathfont{OpenDyslexic}[range={"01-"02,"04-"27,"30-"7B,"7D-"FF,"2B,"2D,"2E,"B7}]
-\setmathfont{KPMath-Sans}[range={"03D1,"1D751}]
+\setmathfont{OpenDyslexic}[range={"01-"0250,"0252-"27,"30-"7B,"7D-"FF,"2B,"2D,"2E,"B7}]
+\setmathfont{KPMath-Bold}[range={"1D736,"1D6FC}]
+
+%The standard alpha character is hard to distinguish from "a" in OpenDyslexic. Replace it here:
+\newcommand{\calpha}{\symbol{"1D736}}
 
 
 
@@ -202,7 +205,7 @@
 % Custom angle marker
 % Syntax -- \anglabel{<vertex coord>}{<start angle>}{<end angle>}{<arc radius>}
 \NewDocumentCommand{\anglabel}{O{} m m m m}{
-	\draw[#1]($#2 + (#3:#5)$) arc (#3:#4:#5)
+	\draw[#1] ($#2 + (#3:#5)$) arc (#3:#4:#5)
 }
 
 % Custom dashes
@@ -407,6 +410,29 @@
 	\fill ($(1,0)+(-0.0625,0)$) ellipse (0.0625 and 0.125);
 }}
 
+% Screw threads
+\tikzset{screw/.pic={	
+	\fill[fill=black](-0.125,0)rectangle(0.125,0.8);
+	\foreach \x in {1,...,3}{
+		\fill[fill=black,rotate around = {35:(0,\x/5)}]
+			($(0,\x/5) + (0.25,0)$)arc(0:180:0.25 and 0.025);
+		\fill[fill=black,rotate around = {35:(0,\x/5)}]
+			($(0,\x/5) + (-0.25,0)$)arc(180:360:0.25 and 0.025);
+		\draw[draw=white,rotate around = {35:(0,\x/5)}]
+			($(0,\x/5) + (0.25,0)$)arc(0:180:0.25 and 0.025);
+	}
+}}
+
+\tikzset{hookLower/.pic={
+	\draw[line width = 5]
+		($(0,-0.465)+(0.315,0)$)arc(360:110:0.3);
+	\draw[line width = 5]
+		($
+			({0.3*cos(115)},{0.3*sin(115)})+
+			(0.015,-0.465)
+		$)arc(295:362:0.2);
+}}
+
 % Ramp
 % Syntax = \blockRamp{ramp right angle corner}{rampAngle}{rampLength}
 \NewDocumentCommand{\ramp}{m m m}{
@@ -488,7 +514,7 @@
 
 %%%%%%%% Symbols
 
-% Unicode math redefines vartheta. Define the version we want here:
+% Adds a curly theta symbol to compensate for unicode-math overwriting amsmath's /vartheta
 \newcommand{\ctheta}{\symbol{"1D751}}
 
 % Used for ""-bar characters.
@@ -541,6 +567,9 @@
 \newcommand{\force}{\kg.\m\per\s\tothe{2}}
 \newcommand{\energy}{\kg.\m\tothe{2}\per\s\tothe{2}}
 
+% Shorthand for writing scientific notation with units:
+\newcommand{\qtysci}[3]{\qty{#1e#2}{#3}}
+
 % Define imperial units
 % length
 \DeclareSIUnit{\inch}{in}
@@ -562,6 +591,9 @@
 % volume
 \DeclareSIUnit{\floz}{fl oz}
 \DeclareSIUnit{\gal}{gal}
+
+% pressure
+\DeclareSIUnit{\Pa}{Pa}
 
 % temperature
 \DeclareSIUnit{\F}{F}
